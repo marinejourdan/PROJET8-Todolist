@@ -39,6 +39,8 @@ class User implements UserInterface
      */
     private $email;
 
+    private $roles = ['ROLE_USER'];
+
     public function getId()
     {
         return $this->id;
@@ -81,7 +83,18 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+
+        $roles = $this->roles;
+        
+        // // guarantee every user at least has ROLE_USER
+        // $roles[] = 'ROLE_USER';
+
+        return $roles;
+    }
+
+    public function setRoles(array $roles) 
+    {
+        $this->roles = $roles;
     }
 
     public function eraseCredentials()
