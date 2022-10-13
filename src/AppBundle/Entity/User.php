@@ -39,7 +39,17 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="array")
+     */
     private $roles = ['ROLE_USER'];
+    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Task", cascade={"remove"}, fetch="EAGER", mappedBy="author")
+     */
+    private $tasks;
+
 
     public function getId()
     {
@@ -95,6 +105,18 @@ class User implements UserInterface
     public function setRoles(array $roles) 
     {
         $this->roles = $roles;
+    }
+
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    public function setTasks(Collection $tasks)
+    {
+        $this->tasks = $tasks;
+
+        return $this;
     }
 
     public function eraseCredentials()
