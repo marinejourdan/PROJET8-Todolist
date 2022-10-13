@@ -4,9 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class TaskController extends Controller
 {
@@ -22,14 +23,20 @@ class TaskController extends Controller
      * @Route("/tasks/create", name="task_create")
      */
     public function createAction(Request $request)
-    {
+    {   
+        
         $task = new Task();
+        $task->setAuthor($this->get('security.token_storage')->getToken()->getUser());
         $form = $this->createForm(TaskType::class, $task);
+ 
+    
+
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+        
 
             $em->persist($task);
             $em->flush();
