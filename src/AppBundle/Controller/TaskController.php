@@ -26,11 +26,8 @@ class TaskController extends Controller
     {   
         
         $task = new Task();
-        $task->setAuthor($this->get('security.token_storage')->getToken()->getUser());
+        $task->setAuthor($this->getUser());
         $form = $this->createForm(TaskType::class, $task);
- 
-    
-
 
         $form->handleRequest($request);
 
@@ -90,12 +87,18 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        $user=$this->getUser();
+        if ($task->getAuthor()!=$user){
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer la tâche d\'un autre utilisateur.');
+        };
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
-
+        
         $this->addFlash('success', 'La tâche a bien été supprimée.');
-
+    
         return $this->redirectToRoute('task_list');
+        
     }
 }
