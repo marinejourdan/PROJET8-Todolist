@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class TaskControllerTest extends WebTestCase
 {
 
-    public function testListUserRedirectToLoginWhenNotLogged()
+    public function testListTaskRedirectToLoginWhenNotLogged()
     {
         $client = static::createClient();
         $urlGenerator = $client->getContainer()->get('router');
@@ -29,6 +30,7 @@ class TaskControllerTest extends WebTestCase
         $client = $this->createAuthorizedClient();
         
         $crawler= $client->request('GET', '/tasks');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Liste des tâches', $crawler->filter('h1')->text());
         
     }
@@ -38,6 +40,8 @@ class TaskControllerTest extends WebTestCase
         $client = $this->createClient();
         
         $crawler= $client->request('GET', '/tasks');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Liste des tâches', $crawler->filter('h1')->text());
         
     }
@@ -50,28 +54,73 @@ class TaskControllerTest extends WebTestCase
         $this->assertContains('Créer une tâche', $crawler->filter('h1')->text());
     }
 
-    //public function testEditUserPageWhenLogged()
-    // Treouver cmment aujouter le user id dans la route
-    // {
-    //     $client = $this->createAuthorizedClient();
-    //     $user = factory(AppBundle\Entity\User)->create();
-        
-    //     $crawler=$client->request('GET', '/users' $user->id'/edit');
-    //     $this->assertContains('Modifier', $crawler->filter('h1')->text());
-    // }
-
-    public function testCreateTaskWithRedirectToListWhenLogged()
-    {            
-
+    public function addTaskWhenLogged()
+    
+    {
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
+    
+        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('user_create'));
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['task[title]'] = 'bonjour';
+        $form['task[content]'] = 'comment ca va ';
+    
+        $client->submit($form);
+        $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
+    
+        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été ajouté.");  
+    }
+    
+    public function testEditTaskPageWhenLogged()
+    {
+        $client = $this->createAuthorizedClient();
 
-        $client->request(Request::METHOD_POST, $urlGenerator->generate('task_list'));
+        for ($i=0; $i<10;$i++){
+            $task= New Task;
+            $task->setContent('lk,dlk,fdld,ffd');
+            $task->setTitle('knqdojioe');
+            $client->getContainer()->get('doctrine.orm.entity_manager')->persist($task);
+        }
+        $client->getContainer()->get('doctrine.orm.entity_manager')->flush();
+        $urlGenerator = $client->getContainer()->get('router');
+        $crawler=$client->request('GET', $urlGenerator->generate('task_edit', ['id' => 9]));
+        
+        $this->assertContains('Modifier', $crawler->filter('h1')->text());
+    }
+    
+    public function EditTaskWhenLogged()
+    
+    {
+        $client = $this->createAuthorizedClient();
+        $urlGenerator = $client->getContainer()->get('router');
+    
+        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('task_edit', ['id' => 9]));
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['task[title]'] = 'bonjour';
+        $form['task[content]'] = 'comment ca va ';
+    
+        $client->submit($form);
+        $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
+    
+        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été modifiée.");  
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertRegExp('/\/task_list$/', $client->getResponse()->headers->get('location'));
     }
 
+    public function DeleteTaskWhenLogged()
+    
+    {
+        $client = $this->createAuthorizedClient();
+        $urlGenerator = $client->getContainer()->get('router');
+    
+        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('task_delete', ['id' => 9]));
+    
+        $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
+        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été supprimée.");  
+    }
+
+
+
+    
     protected function createAuthorizedClient()
     {
         $client = static::createClient();

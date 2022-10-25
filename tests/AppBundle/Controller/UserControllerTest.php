@@ -32,8 +32,9 @@ class UserControllerTest extends WebTestCase
     public function testListUserWhenLogged()
     {
         $client = $this->createAuthorizedClient();
-        
         $crawler= $client->request('GET', '/users');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Liste des utilisateurs', $crawler->filter('h1')->text());
         
     }
@@ -41,13 +42,47 @@ class UserControllerTest extends WebTestCase
      public function testCreateUserPageWhenLogged()
     {
         $client = $this->createAuthorizedClient();
-    
         $crawler=$client->request('GET', '/users/create');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Créer un utilisateur', $crawler->filter('h1')->text());
     }
 
 
-    public function testAddUser()
+    public function testAddUserWhenLogged()
+    {
+        $client = $this->createAuthorizedClient();
+        $urlGenerator = $client->getContainer()->get('router');
+
+        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('user_create'));
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[username]'] = 'bobby';
+        $form['user[password][first]']='lkjsdfjsdpsdfkps';
+        $form['user[password][second]']='lkjsdfjsdpsdfkps';
+        $form['user[email]'] = 'bobby@bobby.fr';
+        //$form['user[roles][]'] = 'ROLE_USER';
+
+        $client->submit($form);
+        $this->assertTrue($client->getResponse()->isRedirect('/users'));
+
+        $this->assertSelectorTextContains('div.alert.alert-success',"L'utilisateur a bien été ajouté.");  
+
+    }
+
+
+    public function testEditUserPageWhenLogged()
+    {
+        $client = $this->createAuthorizedClient();
+        $urlGenerator = $client->getContainer()->get('router');
+
+        $crawler=$client->request('GET','users/2/edit');
+        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('Modifier', $crawler->filter('h1')->text());
+    }
+
+
+    public function testEditUserwhenLogged()
     {
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
@@ -55,9 +90,10 @@ class UserControllerTest extends WebTestCase
         $crawler=$client->request(Request::METHOD_GET, $urlGenerator->generate('user_create'));
         $form = $crawler->selectButton('Ajouter')->form();
         $form['user[username]'] = 'bobby';
-        //$form['user[password]'] = 'hijfgfgkl';
-        //$form['user[roles]'] = '[ROLE_USER]';
+        $form['user[password][first]']='lkjsdfjsdpsdfkps';
+        $form['user[password][second]']='lkjsdfjsdpsdfkps';
         $form['user[email]'] = 'bobby@bobby.fr';
+        //$form['user[roles][]'] = '[ROLE_USER]';
 
         $client->submit($form);
         $this->assertTrue($client->getResponse()->isRedirect('/users'));
@@ -66,27 +102,6 @@ class UserControllerTest extends WebTestCase
 
     }
 
-    //public function testEditUserPageWhenLogged()
-    // Treouver cmment aujouter le user id dans la route
-    // {
-    //     $client = $this->createAuthorizedClient();
-    //     $user = factory(AppBundle\Entity\User)->create();
-        
-    //     $crawler=$client->request('GET', '/users' $user->id'/edit');
-    //     $this->assertContains('Modifier', $crawler->filter('h1')->text());
-    // }
-
-    public function testCreateUserWithRedirectToListWhenLogged()
-    {            
-
-        $client = $this->createAuthorizedClient();
-        $urlGenerator = $client->getContainer()->get('router');
-
-        $client->request(Request::METHOD_POST, $urlGenerator->generate('user_list'));
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertRegExp('/\/user_list$/', $client->getResponse()->headers->get('location'));
-    }
 
     protected function createAuthorizedClient()
     {
