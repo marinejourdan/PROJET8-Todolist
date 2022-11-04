@@ -22,12 +22,6 @@ class UserControllerTest extends WebTestCase
         $this->assertRegExp('/\/login$/', $client->getResponse()->headers->get('location'));
 
     }
-    
-    //public function testSecurity PasswordEncoder()
-    //{
-        //$user=New User;
-        //$this->assertEquals('hello-world', $user->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-    //}
 
     public function testListUserWhenLogged()
     {
@@ -54,19 +48,25 @@ class UserControllerTest extends WebTestCase
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
 
-        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('user_create'));
+        $crawler = $client->request(
+            Request::METHOD_GET, 
+            $urlGenerator->generate('user_create')
+        );
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('utilisateur', $crawler->filter('h1')->text());
+
         $form = $crawler->selectButton('Ajouter')->form();
-        $form['user[username]'] = 'bobby';
-        $form['user[password][first]']='lkjsdfjsdpsdfkps';
-        $form['user[password][second]']='lkjsdfjsdpsdfkps';
-        $form['user[email]'] = 'bobby@bobby.fr';
-        //$form['user[roles][]'] = 'ROLE_USER';
+
+        $form['user[username]'] = 'ezaes';
+        $form['user[password][first]']= 'ezezars';
+        $form['user[password][second]']= 'ezezars';
+        $form['user[roles][0]']= 'ROLE_USER';
+        $form['user[email]'] = 'zaeazef@jean.fr';
 
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/users'));
-
-        $this->assertSelectorTextContains('div.alert.alert-success',"L'utilisateur a bien été ajouté.");  
-
+        //echo $client->getResponse()->getContent();
+        $client->followRedirect('/users');
     }
 
 
@@ -75,7 +75,7 @@ class UserControllerTest extends WebTestCase
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
 
-        $crawler=$client->request('GET','users/2/edit');
+        $crawler=$client->request('GET','users/5/edit');
         
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Modifier', $crawler->filter('h1')->text());
@@ -87,19 +87,30 @@ class UserControllerTest extends WebTestCase
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
 
+        $crawler = $client->request(
+            Request::METHOD_GET, 
+            $urlGenerator->generate('user_create')
+        );
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('utilisateur', $crawler->filter('h1')->text());
+
+        $form = $crawler->selectButton('Ajouter')->form();
+
+
         $crawler=$client->request(Request::METHOD_GET, $urlGenerator->generate('user_create'));
         $form = $crawler->selectButton('Ajouter')->form();
-        $form['user[username]'] = 'bobby';
-        $form['user[password][first]']='lkjsdfjsdpsdfkps';
-        $form['user[password][second]']='lkjsdfjsdpsdfkps';
-        $form['user[email]'] = 'bobby@bobby.fr';
-        //$form['user[roles][]'] = '[ROLE_USER]';
+
+        $form['user[username]'] = 'zezaert';
+        $form['user[password][first]']= 'pzedr';
+        $form['user[password][second]']= 'pzedr';
+        $form['user[roles][0]']= 'ROLE_USER';
+        $form['user[email]'] = 'azerzaef@jean.fr';
 
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/users'));
-
-        $this->assertSelectorTextContains('div.alert alert-success',"L'utilisateur a bien été ajouté.");  
-
+        //echo $client->getResponse()->getContent();
+        $client->followRedirect('/users');
+       
     }
 
 

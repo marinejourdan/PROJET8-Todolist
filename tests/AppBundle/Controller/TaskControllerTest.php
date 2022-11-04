@@ -54,71 +54,71 @@ class TaskControllerTest extends WebTestCase
         $this->assertContains('Créer une tâche', $crawler->filter('h1')->text());
     }
 
-    public function addTaskWhenLogged()
+    public function testAddTaskWhenLogged()
     
     {
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
     
-        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('user_create'));
+        $crawler=$client->request(Request::METHOD_GET, $urlGenerator->generate('task_create'));
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('tâche', $crawler->filter('h1')->text());
+
         $form = $crawler->selectButton('Ajouter')->form();
-        $form['task[title]'] = 'bonjour';
-        $form['task[content]'] = 'comment ca va ';
+
+        $form['task[title]'] = 'lUYKIueryttyr';
+        $form['task[content]'] = 'corzetva ';
     
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
-    
-        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été ajouté.");  
+        //echo $client->getResponse()->getContent();
+        $client->followRedirect('/tasks');
     }
     
     public function testEditTaskPageWhenLogged()
     {
         $client = $this->createAuthorizedClient();
-
-        for ($i=0; $i<10;$i++){
-            $task= New Task;
-            $task->setContent('lk,dlk,fdld,ffd');
-            $task->setTitle('knqdojioe');
-            $client->getContainer()->get('doctrine.orm.entity_manager')->persist($task);
-        }
-        $client->getContainer()->get('doctrine.orm.entity_manager')->flush();
         $urlGenerator = $client->getContainer()->get('router');
-        $crawler=$client->request('GET', $urlGenerator->generate('task_edit', ['id' => 9]));
+        $crawler=$client->request('GET', $urlGenerator->generate('task_edit', ['id' => 11]));
         
         $this->assertContains('Modifier', $crawler->filter('h1')->text());
     }
     
-    public function EditTaskWhenLogged()
+    public function testEditTaskWhenLogged()
     
     {
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
-    
-        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('task_edit', ['id' => 9]));
-        $form = $crawler->selectButton('Ajouter')->form();
-        $form['task[title]'] = 'bonjour';
-        $form['task[content]'] = 'comment ca va ';
+
+        $crawler = $client->request(
+            Request::METHOD_GET, 
+            $urlGenerator->generate('task_edit', ['id'=>12])
+        );
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('tâche', $crawler->filter('h1')->text());
+        
+
+        $form = $crawler->selectButton('Modifier')->form();
+        
+
+        $form['task[title]'] = 'bsdfur';
+        $form['task[content]'] = 'cosffa ';
     
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
-    
-        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été modifiée.");  
-
+        echo $client->getResponse()->getContent();
+        $client->followRedirect('/tasks');
     }
 
-    public function DeleteTaskWhenLogged()
+    public function testDeleteTaskWhenLogged()
     
     {
         $client = $this->createAuthorizedClient();
         $urlGenerator = $client->getContainer()->get('router');
     
-        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('task_delete', ['id' => 9]));
+        $crawler=$client->request(Request::METHOD_POST, $urlGenerator->generate('task_delete', ['id' => 32]));
     
         $this->assertTrue($client->getResponse()->isRedirect('/tasks'));
-        $this->assertSelectorTextContains('div.alert.alert-success',"La tâche a bien été supprimée.");  
+        
     }
-
-
 
     
     protected function createAuthorizedClient()
