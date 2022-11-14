@@ -46,19 +46,6 @@ class AppFixtures extends Fixture
     
         $manager->persist($task1);
 
-        $doctrine = $this->container->get('doctrine');
-        $taskRepository = $doctrine->getRepository(Task::class);
-
-        $manager->flush();
-        
-        $tasks= $taskRepository->findAll();
-        foreach($tasks as $task){
-            if (!$task->getAuthor()){
-                $task->setAuthor($anonymousUser); 
-            }
-            $manager->persist($task);
-        }
-
         $manager->flush();
 
     }
