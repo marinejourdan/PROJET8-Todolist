@@ -14,10 +14,8 @@ class UserController extends Controller
      * @Route("/users", name="user_list")
      */
     public function listAction()
-
     {
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
-        
     }
 
     /**
@@ -25,11 +23,10 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
-
         $username = $request->get('user[username]');
 
         $user = new User();
-        
+
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -37,7 +34,6 @@ class UserController extends Controller
         $submitted = $form->isSubmitted();
 
         if ($form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);

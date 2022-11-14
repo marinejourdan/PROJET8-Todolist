@@ -4,10 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends Controller
 {
@@ -23,8 +22,7 @@ class TaskController extends Controller
      * @Route("/tasks/create", name="task_create")
      */
     public function createAction(Request $request)
-    {   
-        
+    {
         $task = new Task();
         $task->setAuthor($this->getUser());
         $form = $this->createForm(TaskType::class, $task);
@@ -33,7 +31,7 @@ class TaskController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-    
+
             $em->persist($task);
             $em->flush();
 
@@ -86,18 +84,17 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-        $user=$this->getUser();
-        if ($task->getAuthor()!=$user){
+        $user = $this->getUser();
+        if ($task->getAuthor() != $user) {
             throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer la tâche d\'un autre utilisateur.');
-        };
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
-        
+
         $this->addFlash('success', 'La tâche a bien été supprimée.');
-    
+
         return $this->redirectToRoute('task_list');
-        
     }
 }

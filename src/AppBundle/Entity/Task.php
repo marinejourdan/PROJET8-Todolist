@@ -40,7 +40,6 @@ class Task
      */
     private $isDone;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="User", fetch="EAGER", inversedBy="tasks")
      */
@@ -48,7 +47,7 @@ class Task
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime();
+        $this->createdAt = new \DateTime();
         $this->isDone = false;
     }
 
@@ -108,5 +107,4 @@ class Task
 
         return $this;
     }
-
 }

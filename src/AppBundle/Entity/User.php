@@ -2,11 +2,11 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table("user")
@@ -44,13 +44,11 @@ class User implements UserInterface
      * @ORM\Column(type="array")
      */
     private $roles = ['ROLE_USER'];
-    
 
     /**
      * @ORM\OneToMany(targetEntity="Task", cascade={"remove"}, fetch="EAGER", mappedBy="author")
      */
     private $tasks;
-
 
     public function getId()
     {
@@ -94,16 +92,15 @@ class User implements UserInterface
 
     public function getRoles()
     {
-
         $roles = $this->roles;
-        
+
         // // guarantee every user at least has ROLE_USER
         // $roles[] = 'ROLE_USER';
 
         return $roles;
     }
 
-    public function setRoles(array $roles) 
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
     }
