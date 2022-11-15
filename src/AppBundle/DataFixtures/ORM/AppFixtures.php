@@ -42,7 +42,6 @@ class AppFixtures extends Fixture
         $task1 = new Task();
         $task1->setTitle('bonjour');
         $task1->setContent('version à jour de symfony');
-        $task1->setAuthor($user1);
 
         $manager->persist($task1);
 

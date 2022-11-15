@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20221110121147 extends AbstractMigration implements ContainerAwareInterface
+final class Version20221114115441 extends AbstractMigration implements ContainerAwareInterface
 {
 
     /** @var ContainerInterface */
@@ -29,7 +29,6 @@ final class Version20221110121147 extends AbstractMigration implements Container
     }
 
 
-
     public function preUp(Schema $schema): void
     {
       
@@ -37,8 +36,7 @@ final class Version20221110121147 extends AbstractMigration implements Container
 
     public function getDescription() : string
     {
-        return '';
-
+        return 'Add author and anonymous user';
     }
 
     public function up(Schema $schema) : void
@@ -60,7 +58,18 @@ final class Version20221110121147 extends AbstractMigration implements Container
 
     public function down(Schema $schema) : void
     {
-        // this down() migration is auto-generated, please modify it to your needs
-
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $taskRepository = $em->getRepository(Task::
+        class);
+        $tasks= $taskRepository->findAll();
+        $userRepository = $em->getRepository(User::class);
+        $anonymousUser= $userRepository->findOneBy(['email' => 'anonyme@anonyme.fr']);
+        foreach($tasks as $task){
+            if ($task->getAuthor() == $anonymousUser){
+                $task->setAuthor(null); 
+            }
+            $em->persist($task);
+        }
+        $em->flush();
     }
 }
