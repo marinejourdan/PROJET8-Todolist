@@ -1,22 +1,31 @@
 <?php
 
-namespace AppBundle\DataFixtures;
+namespace App\DataFixtures\ORM;
 
-use AppBundle\Entity\Task;
-use AppBundle\Entity\User;
+use App\Entity\Task;
+use App\Entity\User;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+   
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $anonymousUser = new User();
 
         $anonymousUser->setUsername('anonyme');
         $password = 'anonyme';
-        $password = $this->container->get('security.password_encoder')->encodePassword($anonymousUser, $anonymousUser->getPassword());
-        $anonymousUser->setPassword($password);
+        $passwordNew = $this->passwordEncoder->encodePassword($anonymousUser, $password);
+        $anonymousUser->setPassword($passwordNew);
         $anonymousUser->setEmail('anonyme@anonyme.fr');
         $anonymousUser->setRoles(['ROLE_USER']);
 
@@ -26,8 +35,8 @@ class AppFixtures extends Fixture
 
         $user1->setUsername('maurice');
         $password = 'maurice';
-        $password = $this->container->get('security.password_encoder')->encodePassword($user1, $user1->getPassword());
-        $user1->setPassword($password);
+        $passwordNew = $this->passwordEncoder->encodePassword($user1, $password);
+        $user1->setPassword($passwordNew);
         $user1->setEmail('maurice@maurice.fr');
         $user1->setRoles(['ROLE_ADMIN']);
 

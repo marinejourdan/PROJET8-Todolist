@@ -4,8 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "App\\AppBundle\\": "src/AppBundle/"
+            "App\\": "src/"
         },
 
         "classmap": [
@@ -50,20 +49,22 @@
         "symfony/flex": "^1.19",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "symfony/maker-bundle":"*"
+        "symfony/maker-bundle":"*",
+        "symfony/validator": "^5.4"
     },
 
     "conflict": {
-                "symfony/symfony": "*"
+        "symfony/symfony": "*"
     },
 
     "require-dev": {
         "symfony/phpunit-bridge": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "symfony/dotenv": "4.4.*",
-        "symfony/css-selector": "4.4.*"
+        "symfony/css-selector": "4.4.*",
+        "symfony/stopwatch": "4.4.*",
+        "symfony/web-profiler-bundle": "4.4.*"
     },
-   
     "extra": {
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
