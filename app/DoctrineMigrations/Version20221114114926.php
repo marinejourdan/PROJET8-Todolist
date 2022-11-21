@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Migrations;
 
-use AppBundle\Entity\Task;
-use AppBundle\Entity\User;
+use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\DBAL\Schema\Schema;
 use AppBundle\DataFixtures\AppFixtures;
 use Doctrine\Migrations\AbstractMigration;
