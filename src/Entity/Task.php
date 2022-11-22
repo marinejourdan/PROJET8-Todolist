@@ -27,7 +27,7 @@ public function __construct() {
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="DateTime")
      */
     private $createdAt;
 
@@ -59,42 +59,42 @@ public function __construct() {
         return $this->id;
     }
 
-    public function getCreatedAt(): dateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(datetime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getTitle(): string
+    public function getTitle(): String
     {
         return $this->title;
     }
 
-    public function setTitle(string $title)
+    public function setTitle(String $title)
     {
         $this->title = $title;
     }
 
-    public function getContent() : string
+    public function getContent() : String
     {
         return $this->content;
     }
 
-    public function setContent(string $content)
+    public function setContent(String $content)
     {
         $this->content = $content;
     }
 
-    public function isDone() :boolean
+    public function isDone() :Boolean
     {
         return $this->isDone;
     }
 
-    public function toggle(boolean $flag)
+    public function toggle(Boolean $flag)
     {
         $this->isDone = $flag;
     }

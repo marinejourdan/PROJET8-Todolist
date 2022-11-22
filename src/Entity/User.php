@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    public function __construct() {
+        $this->User = new ArrayCollection();
+    }
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -55,12 +58,12 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function getUsername(): string
+    public function getUsername(): String
     {
         return $this->username;
     }
 
-    public function setUsername(string $username)
+    public function setUsername(String $username)
     {
         $this->username = $username;
     }
@@ -70,22 +73,22 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
-    public function getPassword(): string
+    public function getPassword(): String
     {
         return $this->password;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(String $password)
     {
         $this->password = $password;
     }
 
-    public function getEmail(): string
+    public function getEmail(): String
     {
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(String $email)
     {
         $this->email = $email;
     }
@@ -97,7 +100,7 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(Array $roles)
     {
         $this->roles = $roles;
     }
