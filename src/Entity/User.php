@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table("user")
@@ -58,12 +58,12 @@ class User implements UserInterface, \Serializable
         return $this->id;
     }
 
-    public function getUsername(): String
+    public function getUsername():string
     {
         return $this->username;
     }
 
-    public function setUsername(String $username)
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
@@ -73,22 +73,22 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
-    public function getPassword(): String
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(String $password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
 
-    public function getEmail(): String
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(String $email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
@@ -100,17 +100,17 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-    public function setRoles(Array $roles)
+    public function setRoles(ArrayCollection= $roles)
     {
         $this->roles = $roles;
     }
 
-    public function getTasks(): ArrayCollection
+    public function getTasks(): arrayCollection
     {
         return $this->tasks;
     }
 
-    public function setTasks(ArrayCollection $tasks)
+    public function setTasks(arrayCollection $tasks)
     {
         $this->tasks = $tasks;
 

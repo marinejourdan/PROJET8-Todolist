@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\Task;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +16,7 @@ class Task
 {
 public function __construct() {
     $this->Task = new ArrayCollection();
-    $this->createdAt = new \DateTime();
+    $this->createdAt = new DateTime();
     $this->isDone = false;
 }
 
@@ -69,32 +70,32 @@ public function __construct() {
         $this->createdAt = $createdAt;
     }
 
-    public function getTitle(): String
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(String $title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
-    public function getContent() : String
+    public function getContent() : string
     {
         return $this->content;
     }
 
-    public function setContent(String $content)
+    public function setContent(string $content)
     {
         $this->content = $content;
     }
 
-    public function isDone() :Boolean
+    public function isDone(): ?bool
     {
         return $this->isDone;
     }
 
-    public function toggle(Boolean $flag)
+    public function toggle(?bool $flag)
     {
         $this->isDone = $flag;
     }
@@ -107,6 +108,18 @@ public function __construct() {
     public function setAuthor(User $author)
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function isIsDone(): ?bool
+    {
+        return $this->isDone;
+    }
+
+    public function setIsDone(bool $isDone): self
+    {
+        $this->isDone = $isDone;
 
         return $this;
     }
