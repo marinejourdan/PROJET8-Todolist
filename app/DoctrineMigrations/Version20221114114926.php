@@ -51,7 +51,7 @@ final class Version20221114114926 extends AbstractMigration implements Container
     }
 
 
-    public function postUp(Schema $schema) : void
+    public function postUp(Schema $schema, UserPasswordHasherInterface $passwordHasher) : void
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -59,7 +59,7 @@ final class Version20221114114926 extends AbstractMigration implements Container
 
         $anonymousUser->setUsername('anonyme');
         $password = 'anonyme';
-        $password = $this->container->get('security.password_encoder')->encodePassword($anonymousUser, $anonymousUser->getPassword());
+        $password = $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
         $anonymousUser->setPassword($password);
         $anonymousUser->setEmail('anonyme@anonyme.fr');
         $anonymousUser->setRoles(['ROLE_USER']);
@@ -70,7 +70,7 @@ final class Version20221114114926 extends AbstractMigration implements Container
 
         $user1->setUsername('maurice');
         $password = 'maurice';
-        $password = $this->container->get('security.password_encoder')->encodePassword($user1, $user1->getPassword());
+        $password = $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
         $user1->setPassword($password);
         $user1->setEmail('maurice@maurice.fr');
         $user1->setRoles(['ROLE_ADMIN']);

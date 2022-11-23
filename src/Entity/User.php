@@ -100,17 +100,17 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-    public function setRoles(ArrayCollection= $roles)
+    public function setRoles($roles)
     {
         $this->roles = $roles;
     }
 
-    public function getTasks(): arrayCollection
+    public function getTasks()
     {
         return $this->tasks;
     }
 
-    public function setTasks(arrayCollection $tasks)
+    public function setTasks($tasks)
     {
         $this->tasks = $tasks;
 

@@ -16,7 +16,7 @@ class Task
 {
 public function __construct() {
     $this->Task = new ArrayCollection();
-    $this->createdAt = new DateTime();
+    $this->createdAt =  new DateTime();
     $this->isDone = false;
 }
 
@@ -28,7 +28,7 @@ public function __construct() {
     private $id;
 
     /**
-     * @ORM\Column(type="DateTime")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -60,14 +60,15 @@ public function __construct() {
         return $this->id;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+        return $this;
     }
 
     public function getTitle(): string
