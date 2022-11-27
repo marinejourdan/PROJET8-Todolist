@@ -48,8 +48,12 @@ class TaskController extends AbstractController
      */
     public function editAction(Task $task, Request $request)
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $user = $this->getUser();
+        if ($task->getAuthor() != $user) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas supprimer la tâche d\'un autre utilisateur.');
+        }
 
+        $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

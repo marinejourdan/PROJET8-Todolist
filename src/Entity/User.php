@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,9 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface, \Serializable
 {
-    public function __construct() {
-        $this->User = new ArrayCollection();
-    }
+   
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -53,12 +52,17 @@ class User implements UserInterface, \Serializable
      */
     private $tasks;
 
+    public function __construct() {
+        $this->roles = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername():string
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -68,7 +72,7 @@ class User implements UserInterface, \Serializable
         $this->username = $username;
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -93,24 +97,24 @@ class User implements UserInterface, \Serializable
         $this->email = $email;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
         return $roles;
     }
 
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
     }
 
-    public function getTasks()
+    public function getTasks(): Collection
     {
         return $this->tasks;
     }
 
-    public function setTasks($tasks)
+    public function setTasks(Collection $tasks)
     {
         $this->tasks = $tasks;
 
@@ -141,7 +145,7 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function supportsClass($class)
+    public function supportsClass(object $class)
     {
         return $class === User::class;
     }

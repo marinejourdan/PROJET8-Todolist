@@ -14,11 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Task
 {
-public function __construct() {
-    $this->Task = new ArrayCollection();
-    $this->createdAt =  new DateTime();
-    $this->isDone = false;
-}
 
     /**
      * @ORM\Column(type="integer")
@@ -54,18 +49,23 @@ public function __construct() {
      */
     private $author;
 
+    public function __construct() {
+        $this->createdAt =  new \DateTime();
+        $this->isDone = false;
+    }
+    
  
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -101,7 +101,7 @@ public function __construct() {
         $this->isDone = $flag;
     }
 
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
