@@ -41,8 +41,8 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, roles: ROLE_USER }
-        - { path: ^/tasks, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/tasks/.*, roles: ROLE_USER }
+        - { path: ^/tasks, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: ROLE_ADMIN }
        
     role_hierarchy:

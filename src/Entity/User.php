@@ -53,7 +53,7 @@ class User implements UserInterface, \Serializable
     private $tasks;
 
     public function __construct() {
-        $this->roles = new ArrayCollection();
+        //$this->roles = new array();
         $this->tasks = new ArrayCollection();
     }
 
@@ -104,7 +104,6 @@ class User implements UserInterface, \Serializable
     public function getRoles(): array
     {
         $roles = $this->roles;
-
         return $roles;
     }
 
