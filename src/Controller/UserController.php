@@ -16,7 +16,7 @@ class UserController extends AbstractController
      * @Route("/users", name="user_list")
      * 
      */
-    public function listAction()
+    public function listAction(): Response
     {
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('App\Entity\User')->findAll()]);
     }
