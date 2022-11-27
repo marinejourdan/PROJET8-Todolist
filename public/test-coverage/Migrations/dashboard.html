@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /var/www/htdocs/src/Entity</title>
+  <title>Dashboard for /var/www/htdocs/src/Migrations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/var/www/htdocs/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Entity</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Migrations</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,7 +58,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Task.php.html#15">App\Entity\Task</a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="Factory/MigrationFactoryDecorator.php.html#12">App\Migrations\Factory\MigrationFactoryDecorator</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -75,6 +75,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Factory/MigrationFactoryDecorator.php.html#12">App\Migrations\Factory\MigrationFactoryDecorator</a></td><td class="text-right">12</td></tr>
 
        </tbody>
       </table>
@@ -112,10 +113,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Task.php.html#117"><abbr title="App\Entity\Task::isIsDone">isIsDone</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Task.php.html#122"><abbr title="App\Entity\Task::setIsDone">setIsDone</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="User.php.html#129"><abbr title="App\Entity\User::eraseCredentials">eraseCredentials</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="User.php.html#153"><abbr title="App\Entity\User::supportsClass">supportsClass</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Factory/MigrationFactoryDecorator.php.html#18"><abbr title="App\Migrations\Factory\MigrationFactoryDecorator::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Factory/MigrationFactoryDecorator.php.html#29"><abbr title="App\Migrations\Factory\MigrationFactoryDecorator::createVersion">createVersion</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -132,6 +131,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Factory/MigrationFactoryDecorator.php.html#29"><abbr title="App\Migrations\Factory\MigrationFactoryDecorator::createVersion">createVersion</abbr></a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -160,7 +160,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,1,1,0], "Class Coverage"))
+      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -178,7 +178,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([4,0,0,0,0,0,0,0,0,0,0,27], "Method Coverage"))
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -228,7 +228,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[85,14,"<a href=\"Task.php.html#15\">App\\Entity\\Task<\/a>"],[93.54838709677419,17,"<a href=\"User.php.html#17\">App\\Entity\\User<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,3,"<a href=\"Factory\/MigrationFactoryDecorator.php.html#12\">App\\Migrations\\Factory\\MigrationFactoryDecorator<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -252,7 +252,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"Task.php.html#52\">App\\Entity\\Task::__construct<\/a>"],[100,1,"<a href=\"Task.php.html#58\">App\\Entity\\Task::getId<\/a>"],[100,1,"<a href=\"Task.php.html#63\">App\\Entity\\Task::getCreatedAt<\/a>"],[100,1,"<a href=\"Task.php.html#68\">App\\Entity\\Task::setCreatedAt<\/a>"],[100,1,"<a href=\"Task.php.html#74\">App\\Entity\\Task::getTitle<\/a>"],[100,1,"<a href=\"Task.php.html#79\">App\\Entity\\Task::setTitle<\/a>"],[100,1,"<a href=\"Task.php.html#85\">App\\Entity\\Task::getContent<\/a>"],[100,1,"<a href=\"Task.php.html#90\">App\\Entity\\Task::setContent<\/a>"],[100,1,"<a href=\"Task.php.html#96\">App\\Entity\\Task::isDone<\/a>"],[100,1,"<a href=\"Task.php.html#101\">App\\Entity\\Task::toggle<\/a>"],[100,1,"<a href=\"Task.php.html#106\">App\\Entity\\Task::getAuthor<\/a>"],[100,1,"<a href=\"Task.php.html#111\">App\\Entity\\Task::setAuthor<\/a>"],[0,1,"<a href=\"Task.php.html#117\">App\\Entity\\Task::isIsDone<\/a>"],[0,1,"<a href=\"Task.php.html#122\">App\\Entity\\Task::setIsDone<\/a>"],[100,1,"<a href=\"User.php.html#55\">App\\Entity\\User::__construct<\/a>"],[100,1,"<a href=\"User.php.html#60\">App\\Entity\\User::getId<\/a>"],[100,1,"<a href=\"User.php.html#65\">App\\Entity\\User::getUsername<\/a>"],[100,1,"<a href=\"User.php.html#70\">App\\Entity\\User::setUsername<\/a>"],[100,1,"<a href=\"User.php.html#76\">App\\Entity\\User::getSalt<\/a>"],[100,1,"<a href=\"User.php.html#81\">App\\Entity\\User::getPassword<\/a>"],[100,1,"<a href=\"User.php.html#86\">App\\Entity\\User::setPassword<\/a>"],[100,1,"<a href=\"User.php.html#92\">App\\Entity\\User::getEmail<\/a>"],[100,1,"<a href=\"User.php.html#97\">App\\Entity\\User::setEmail<\/a>"],[100,1,"<a href=\"User.php.html#104\">App\\Entity\\User::getRoles<\/a>"],[100,1,"<a href=\"User.php.html#110\">App\\Entity\\User::setRoles<\/a>"],[100,1,"<a href=\"User.php.html#117\">App\\Entity\\User::getTasks<\/a>"],[100,1,"<a href=\"User.php.html#122\">App\\Entity\\User::setTasks<\/a>"],[0,1,"<a href=\"User.php.html#129\">App\\Entity\\User::eraseCredentials<\/a>"],[100,1,"<a href=\"User.php.html#133\">App\\Entity\\User::serialize<\/a>"],[100,1,"<a href=\"User.php.html#143\">App\\Entity\\User::unserialize<\/a>"],[0,1,"<a href=\"User.php.html#153\">App\\Entity\\User::supportsClass<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"Factory\/MigrationFactoryDecorator.php.html#18\">App\\Migrations\\Factory\\MigrationFactoryDecorator::__construct<\/a>"],[0,2,"<a href=\"Factory\/MigrationFactoryDecorator.php.html#29\">App\\Migrations\\Factory\\MigrationFactoryDecorator::createVersion<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
