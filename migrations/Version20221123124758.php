@@ -22,7 +22,7 @@ final class Version20221123124758 extends AbstractMigration implements Container
 
     private $passwordHasher;
     
-    public function setPasswordHasher(UserPasswordHasherInterface $passwordHasher)
+    public function setPasswordHasher(UserPasswordHasherInterface $passwordHasher): void
     {
         $this->passwordHasher = $passwordHasher;
     }

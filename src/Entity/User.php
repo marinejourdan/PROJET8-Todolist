@@ -67,9 +67,10 @@ class User implements UserInterface, \Serializable
         return $this->username;
     }
 
-    public function setUsername(string $username)
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+        return $this;
     }
 
     public function getSalt(): ?string
@@ -82,9 +83,10 @@ class User implements UserInterface, \Serializable
         return $this->password;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
     }
 
     public function getEmail(): string
@@ -92,9 +94,11 @@ class User implements UserInterface, \Serializable
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
+        
     }
 
     public function getRoles(): array
@@ -104,9 +108,11 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        return $this;
+        
     }
 
     public function getTasks(): Collection
@@ -114,7 +120,7 @@ class User implements UserInterface, \Serializable
         return $this->tasks;
     }
 
-    public function setTasks(Collection $tasks)
+    public function setTasks(Collection $tasks): self
     {
         $this->tasks = $tasks;
 
@@ -145,7 +151,7 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function supportsClass(object $class)
+    public function supportsClass(object $class): bool
     {
         return $class === User::class;
     }
