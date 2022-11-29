@@ -82,13 +82,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         
     }
 
-    public function getPassword($credentials): ?string
+    public function getPassword(object $credentials): ?string
     {
         return $credentials['password'];
     }
 
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
