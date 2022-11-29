@@ -126,7 +126,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials():void
     {
     }
 
