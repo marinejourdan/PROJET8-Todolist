@@ -64,3 +64,5 @@ Accès à la partie sécurité du projet : connexions et rôles définis.
 - php unit: rapports de couverture
 
 
+Lors de votre première contribution au projet, je vous invite à prendre connaissance de l'ensemble du fichier complet (en pdf) dans le dossier contibution projet qui vous permet d'avoir une vue d'ensemble sur le projet (les diagrammes, l'initialisation du projet, l'authentification,  les techniques de contribution les couvertures de code ainsi que l'audit de performance et de qualité).
+Vous pourrez ensuite retrouer les détails dans chaque dossier dans les différents sous dossiers (php unit, rapport audit).
