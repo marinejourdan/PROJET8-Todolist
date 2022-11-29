@@ -56,3 +56,11 @@ Accès à la partie sécurité du projet : connexions et rôles définis.
 - tests: à effectuer après chaque modification
 
 - migrations: à effectuer lors de l'initialisation du projet
+
+- apport audit: qualité de code et performance
+
+- contribution projet: authentification et initialisation projet en pdf
+
+- php unit: rapports de couverture
+
+
