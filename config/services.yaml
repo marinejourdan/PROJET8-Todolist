@@ -34,4 +34,5 @@ services:
     App\Migrations\Factory\MigrationFactoryDecorator:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: ['@App\Migrations\Factory\MigrationFactoryDecorator.inner', '@service_container']
-        
+
+
