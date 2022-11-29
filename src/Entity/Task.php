@@ -101,6 +101,7 @@ class Task
     public function toggle(?bool $flag): self
     {
         $this->isDone = $flag;
+        return $this;
     }
 
     public function getAuthor(): ?User
